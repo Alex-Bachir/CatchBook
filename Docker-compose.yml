@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+
+  # Base de données MySQL partagée entre tous les services
+  mysql:
+    image: mysql:8.0
+    container_name: catchbook-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: catchbook_user
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  # Service de gestion des utilisateurs — port 8082
+  user-service:
+    build: ./user-service
+    container_name: user-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mysql # Lance MySQL avant ce service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catchbook_user
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+
+  # Service de gestion de l'authentification OAuth2 — port 8081
+  auth-service:
+    build: ./auth-service
+    container_name: auth-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql # Lance MySQL avant ce service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catchbook_auth
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+
+  # Service de gestion des prises, spots et commentaires — port 8083
+  catch-service:
+    build: ./catch-service
+    container_name: catch-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      - mysql # Lance MySQL avant ce service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catchbook_catch
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+
+  # Point d'entrée unique — redirige les requêtes vers les bons services — port 8080
+  api-gateway:
+    build: ./api-gateway
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - user-service   # Lance user-service avant
+      - auth-service   # Lance auth-service avant
+      - catch-service  # Lance catch-service avant
+
+# Volume persistant pour les données MySQL
+volumes:
+  mysql-data:
