@@ -23,6 +23,9 @@ public class User {
     private String pseudo;
     private String email;
 
+    @Column(name = "password")
+    private String password;
+
     @Column(name = "photo_profile")
     private String photoProfile;
 
