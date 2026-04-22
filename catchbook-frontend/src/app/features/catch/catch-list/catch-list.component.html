@@ -1,0 +1,9 @@
+<div class="catch-list-container">
+  <h2>Les prises 🎣</h2>
+  <div *ngFor="let catch_ of catches" class="catch-card">
+    <img [src]="catch_.photoUrl" alt="Photo de la prise" />
+    <p>{{ catch_.species }}</p>
+    <p>{{ catch_.weight }} kg - {{ catch_.size }} cm</p>
+    <p>{{ catch_.catchDate | date:'dd/MM/yyyy' }}</p>
+  </div>
+</div>

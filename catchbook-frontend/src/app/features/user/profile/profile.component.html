@@ -1,0 +1,10 @@
+<div class="profile-container">
+  <h2>Mon Profil</h2>
+  <div *ngIf="user">
+    <img [src]="user.photoProfile" alt="Photo de profil" />
+    <p>{{ user.firstName }} {{ user.lastName }}</p>
+    <p>@{{ user.pseudo }}</p>
+    <p>{{ user.ville }}</p>
+    <p>{{ user.description }}</p>
+  </div>
+</div>
