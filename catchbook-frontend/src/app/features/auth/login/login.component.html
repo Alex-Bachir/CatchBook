@@ -1,7 +1,45 @@
 <div class="login-container">
-  <h2>CatchBook 🎣</h2>
-  <input type="email" [(ngModel)]="email" placeholder="Email" />
-  <input type="password" [(ngModel)]="password" placeholder="Mot de passe" />
-  <button (click)="onLogin()">Se connecter</button>
-  <p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p>
+  <div class="login-header">
+    <div class="logo">
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="24" r="24" fill="url(#grad)"/>
+        <path d="M8 28C12 20 18 16 24 18C30 20 34 16 40 20" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        <path d="M10 32C14 24 20 20 26 22C32 24 36 20 42 24" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <circle cx="30" cy="22" r="4" fill="white"/>
+        <circle cx="30" cy="22" r="2" fill="url(#grad)"/>
+        <path d="M34 18L38 14L36 20L42 18L37 23" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <defs>
+          <linearGradient id="grad" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#0a2342"/>
+            <stop offset="100%" stop-color="#0d6e6e"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <span class="logo-text">CatchBook</span>
+    </div>
+    <p class="tagline">Chaque prise raconte une histoire</p>
+  </div>
+
+  <div class="login-card">
+    <h2>Bon retour 👋</h2>
+    <p class="subtitle">Connectez-vous pour voir vos prises</p>
+
+    <div class="input-group">
+      <label>Email</label>
+      <input type="email" [(ngModel)]="email" placeholder="votre@email.com" />
+    </div>
+
+    <div class="input-group">
+      <label>Mot de passe</label>
+      <input type="password" [(ngModel)]="password" placeholder="••••••••" />
+    </div>
+
+    <button class="btn-login" (click)="onLogin()">Se connecter</button>
+
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+    <div class="register-link">
+      Pas encore de compte ? <a routerLink="/register">S'inscrire</a>
+    </div>
+  </div>
 </div>

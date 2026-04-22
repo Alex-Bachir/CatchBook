@@ -1,9 +1,78 @@
-<div class="catch-list-container">
-  <h2>Les prises 🎣</h2>
-  <div *ngFor="let catch_ of catches" class="catch-card">
-    <img [src]="catch_.photoUrl" alt="Photo de la prise" />
-    <p>{{ catch_.fishName }}</p>
-    <p>{{ catch_.fishWeight }} kg - {{ catch_.size }} cm</p>
-    <p>{{ catch_.catchDate | date:'dd/MM/yyyy' }}</p>
+<div class="catches-container">
+
+  <div class="top-bar">
+    <div class="logo">
+      <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="24" r="24" fill="url(#grad)"/>
+        <path d="M8 28C12 20 18 16 24 18C30 20 34 16 40 20" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        <path d="M10 32C14 24 20 20 26 22C32 24 36 20 42 24" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <circle cx="30" cy="22" r="4" fill="white"/>
+        <circle cx="30" cy="22" r="2" fill="url(#grad)"/>
+        <path d="M34 18L38 14L36 20L42 18L37 23" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <defs>
+          <linearGradient id="grad" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#0a2342"/>
+            <stop offset="100%" stop-color="#0d6e6e"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <span class="logo-text">CatchBook</span>
+    </div>
+    <button class="btn-profile" routerLink="/profile">👤</button>
   </div>
+
+  <div class="feed-header">
+    <h2>Les prises 🎣</h2>
+    <p>Découvrez les dernières captures</p>
+  </div>
+
+  <div class="catches-feed">
+    <div *ngFor="let catch_ of catches" class="catch-card">
+      <div class="catch-image">
+        <img [src]="catch_.photoUrl" [alt]="catch_.fishName" />
+        <div class="catch-badge">{{ catch_.fishName }}</div>
+      </div>
+      <div class="catch-info">
+        <div class="catch-stats">
+          <div class="stat">
+            <span class="stat-icon">⚖️</span>
+            <span class="stat-value">{{ catch_.fishWeight }} kg</span>
+          </div>
+          <div class="stat">
+            <span class="stat-icon">📏</span>
+            <span class="stat-value">{{ catch_.size }} cm</span>
+          </div>
+          <div class="stat">
+            <span class="stat-icon">📅</span>
+            <span class="stat-value">{{ catch_.catchDate | date:'dd/MM/yyyy' }}</span>
+          </div>
+        </div>
+        <div class="catch-footer">
+          <span class="catch-public" *ngIf="catch_.spotPublic">📍 Spot public</span>
+          <span class="catch-secret" *ngIf="!catch_.spotPublic">🔒 Spot secret</span>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="catches.length === 0" class="empty-state">
+      <span>🎣</span>
+      <p>Aucune prise pour le moment</p>
+      <small>Soyez le premier à partager !</small>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="nav-btn active" routerLink="/catches">
+      <span>🏠</span>
+      <small>Accueil</small>
+    </button>
+    <button class="nav-btn add-btn">
+      <span>＋</span>
+    </button>
+    <button class="nav-btn" routerLink="/profile">
+      <span>👤</span>
+      <small>Profil</small>
+    </button>
+  </div>
+
 </div>
