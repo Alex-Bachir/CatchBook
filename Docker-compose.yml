@@ -1,6 +1,5 @@
 services:
 
-  # Base de données MySQL partagée entre tous les services
   mysql:
     image: mysql:8.0
     container_name: catchbook-mysql
@@ -17,7 +16,6 @@ services:
       timeout: 5s
       retries: 5
 
-  # Service de gestion des utilisateurs — port 8082
   user-service:
     build: ./user-service
     container_name: user-service
@@ -32,7 +30,6 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
 
-  # Service de gestion de l'authentification OAuth2 — port 8081
   auth-service:
     build: ./auth-service
     container_name: auth-service
@@ -47,7 +44,6 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
 
-  # Service de gestion des prises, spots et commentaires — port 8083
   catch-service:
     build: ./catch-service
     container_name: catch-service
@@ -62,7 +58,6 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
 
-  # Point d'entrée unique — port 8080
   api-gateway:
     build: ./api-gateway
     container_name: api-gateway

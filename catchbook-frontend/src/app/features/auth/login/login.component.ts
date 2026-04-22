@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -14,15 +15,20 @@ export class LoginComponent {
 
   email: string = '';
   password: string = '';
+  errorMessage: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   onLogin() {
-    // Pour l'instant on simule une connexion
-    // Plus tard on appellera l'auth-service
-    if (this.email && this.password) {
-      localStorage.setItem('token', 'fake-token');
-      this.router.navigate(['/catches']);
-    }
+    this.authService.login({ email: this.email, password: this.password }).subscribe({
+      next: (response) => {
+        localStorage.setItem('token', response.token);
+        this.router.navigate(['/catches']);
+      },
+      error: (err) => {
+        this.errorMessage = 'Email ou mot de passe incorrect';
+        console.error('Erreur login', err);
+      }
+    });
   }
 }
