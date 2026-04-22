@@ -31,4 +31,8 @@ export class AuthService {
   isLoggedIn(): boolean {
     return !!localStorage.getItem('token');
   }
+
+  register(credentials: LoginRequest): Observable<any> {
+    return this.http.post(`${this.apiUrl}/register`, credentials);
+  }
 }

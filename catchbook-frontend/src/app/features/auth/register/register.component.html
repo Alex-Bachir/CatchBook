@@ -1,0 +1,10 @@
+<div class="register-container">
+  <h2>CatchBook 🎣</h2>
+  <h3>Créer un compte</h3>
+  <input type="email" [(ngModel)]="email" placeholder="Email" />
+  <input type="password" [(ngModel)]="password" placeholder="Mot de passe" />
+  <button (click)="onRegister()">S'inscrire</button>
+  <p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p>
+  <p *ngIf="successMessage" style="color: green;">{{ successMessage }}</p>
+  <a routerLink="/login">Déjà un compte ? Se connecter</a>
+</div>
