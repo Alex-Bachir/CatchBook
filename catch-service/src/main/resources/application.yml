@@ -6,7 +6,7 @@ spring:
     name: catch-service
 
   datasource:
-    url: jdbc:mysql://localhost:3306/catchbook_catch
+    url: jdbc:mysql://catchbook-mysql:3306/catchbook_catch
     username: root
     password:
     driver-class-name: com.mysql.cj.jdbc.Driver
