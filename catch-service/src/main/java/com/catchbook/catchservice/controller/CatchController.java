@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/catch")
+@RequestMapping("/api/catches")
 public class CatchController {
 
     private final CatchService catchService;

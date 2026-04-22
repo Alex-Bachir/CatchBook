@@ -1,10 +1,12 @@
 export interface Catch {
   catchId: number;
   userId: number;
-  spotId: number;
-  species: string;
-  weight: number;
+  fishName: string;
+  fishWeight: number;
   size: number;
   photoUrl: string;
   catchDate: Date;
+  kept: boolean;
+  spotPublic: boolean;
+  createdAt: Date;
 }
