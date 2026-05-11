@@ -24,6 +24,22 @@
     <h2>Créer un compte 🎣</h2>
     <p class="subtitle">Commence à partager tes prises</p>
 
+    <div class="input-row">
+      <div class="input-group">
+        <label>Prénom</label>
+        <input type="text" [(ngModel)]="firstName" placeholder="Jean" />
+      </div>
+      <div class="input-group">
+        <label>Nom</label>
+        <input type="text" [(ngModel)]="lastName" placeholder="Dupont" />
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label>Pseudo</label>
+      <input type="text" [(ngModel)]="pseudo" placeholder="@pecheur_du_dimanche" />
+    </div>
+
     <div class="input-group">
       <label>Email</label>
       <input type="email" [(ngModel)]="email" placeholder="votre@email.com" />

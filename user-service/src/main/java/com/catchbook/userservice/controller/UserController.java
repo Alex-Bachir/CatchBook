@@ -28,6 +28,11 @@ public class UserController {
         return userService.getUserById(id);
     }
 
+    @GetMapping("/by-email")
+    public User getUserByEmail(@RequestParam String email) {
+        return userService.getUserByEmail(email);
+    }
+
     // Créer un utilisateur
     @PostMapping
     public User saveUser(@RequestBody User user) {

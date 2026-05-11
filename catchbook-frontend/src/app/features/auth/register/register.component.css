@@ -224,3 +224,12 @@
     box-shadow: 0 8px 25px rgba(10,35,66,0.3);
   }
 }
+
+.input-row {
+  display: flex;
+  gap: 12px;
+}
+
+.input-row .input-group {
+  flex: 1;
+}

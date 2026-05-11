@@ -30,9 +30,22 @@ public class JwtAuthFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-        String path = httpRequest.getRequestURI();
-        System.out.println(">>> FILTRE JWT APPELÉ : " + path);
+        // Toujours ajouter les headers CORS
+        httpResponse.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+        httpResponse.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        httpResponse.setHeader("Access-Control-Allow-Headers", "*");
+        httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
 
+        String path = httpRequest.getRequestURI();
+        String method = httpRequest.getMethod();
+
+        // Laisser passer les preflight CORS
+        if ("OPTIONS".equalsIgnoreCase(method)) {
+            httpResponse.setStatus(HttpServletResponse.SC_OK);
+            return;
+        }
+
+        // Laisser passer les routes publiques
         if (path.startsWith("/api/auth/")) {
             chain.doFilter(request, response);
             return;

@@ -51,9 +51,9 @@ public class AuthService {
         try {
             Map<String, String> userProfile = Map.of(
                     "email", request.getEmail(),
-                    "pseudo", request.getEmail().split("@")[0],
-                    "firstName", "",
-                    "lastName", ""
+                    "pseudo", request.getPseudo() != null ? request.getPseudo() : request.getEmail().split("@")[0],
+                    "firstName", request.getFirstName() != null ? request.getFirstName() : "",
+                    "lastName", request.getLastName() != null ? request.getLastName() : ""
             );
             restTemplate.postForObject("http://user-service:8082/api/users", userProfile, Map.class);
         } catch (Exception e) {

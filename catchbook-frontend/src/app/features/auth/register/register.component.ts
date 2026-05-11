@@ -11,17 +11,27 @@ import { AuthService } from '../../../core/services/auth.service';
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
+
 export class RegisterComponent {
 
   email: string = '';
   password: string = '';
+  pseudo: string = '';
+  firstName: string = '';
+  lastName: string = '';
   errorMessage: string = '';
   successMessage: string = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
   onRegister() {
-    this.authService.register({ email: this.email, password: this.password }).subscribe({
+    this.authService.register({
+      email: this.email,
+      password: this.password,
+      pseudo: this.pseudo,
+      firstName: this.firstName,
+      lastName: this.lastName
+    }).subscribe({
       next: () => {
         this.successMessage = 'Compte créé ! Redirection...';
         setTimeout(() => this.router.navigate(['/login']), 2000);

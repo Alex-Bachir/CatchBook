@@ -7,8 +7,18 @@ export interface LoginRequest {
   password: string;
 }
 
+export interface RegisterRequest {
+  email: string;
+  password: string;
+  pseudo: string;
+  firstName: string;
+  lastName: string;
+}
+
 export interface LoginResponse {
   token: string;
+  email: string;
+  userId: number;
 }
 
 @Injectable({
@@ -32,7 +42,7 @@ export class AuthService {
     return !!localStorage.getItem('token');
   }
 
-  register(credentials: LoginRequest): Observable<any> {
+  register(credentials: RegisterRequest): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, credentials);
   }
 }
