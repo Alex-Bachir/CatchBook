@@ -32,4 +32,8 @@ public class CatchService {
         catchRepository.deleteById(id);
     }
 
+    public List<Catch> getCatchesByUser(Long userId) {
+        return catchRepository.findByUserId(userId);
+    }
+
 }

@@ -26,6 +26,11 @@ public class CatchController {
         return catchService.getCatchById(id);
     }
 
+    @GetMapping("/user/{userId}")
+    public List<Catch> getCatchesByUser(@PathVariable Long userId) {
+        return catchService.getCatchesByUser(userId);
+    }
+
     @PostMapping
     public Catch saveCatch(@RequestBody Catch fishCatch) {
         return catchService.saveCatch(fishCatch);
