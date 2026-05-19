@@ -1,8 +1,7 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  // Ne pas ajouter le token sur les routes d'authentification
-  if (req.url.includes('/api/auth/')) {
+  if (req.url.includes('/api/auth/') || req.url.includes('cloudinary.com')) {
     return next(req);
   }
 

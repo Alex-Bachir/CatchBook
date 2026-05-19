@@ -275,4 +275,33 @@
   .catch-image {
     height: 280px;
   }
+
+  .fab {
+
+    bottom: 80px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #0d6e6e, #1a4a6e);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.3rem;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(13, 110, 110, 0.4);
+  }
+}
+
+.catch-author {
+  color: black;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.catch-author i {
+  color: #0d6e6e;
 }

@@ -28,5 +28,11 @@ export const routes: Routes = [
     path: 'register',
     loadComponent: () => import('./features/auth/register/register.component')
       .then(m => m.RegisterComponent)
-  }
+  },
+  {
+    path: 'add-catch',
+    loadComponent: () => import('./features/catch/catch-list/add-catch/add-catch.component')
+      .then(m => m.AddCatchComponent),
+    canActivate: [authGuard]
+  },
 ];
