@@ -1,10 +1,88 @@
-<div class="profile-container">
-  <h2>Mon Profil</h2>
-  <div *ngIf="user">
-    <img [src]="user.photoProfile" alt="Photo de profil" />
-    <p>{{ user.firstName }} {{ user.lastName }}</p>
-    <p>{{ user.pseudo }}</p>
-    <p>{{ user.ville }}</p>
-    <p>{{ user.description }}</p>
+<div class="page-container">
+
+  <div class="page-header">
+    <a routerLink="/catches" class="back-btn">
+      <i class="fa-solid fa-arrow-left"></i>
+    </a>
+    <h1 class="page-title">Mon Profil</h1>
   </div>
+
+  <div *ngIf="user">
+
+    <!-- Card profil -->
+    <div class="profile-card">
+      <div class="avatar" (click)="photoInput.click()">
+        <img *ngIf="user.photoProfile && !isUploadingPhoto" [src]="user.photoProfile" alt="photo de profil" class="avatar-img" />
+        <div *ngIf="!user.photoProfile && !isUploadingPhoto" class="avatar-placeholder">
+          <i class="fa-solid fa-user"></i>
+        </div>
+        <div *ngIf="isUploadingPhoto" class="avatar-placeholder">
+          <i class="fa-solid fa-spinner fa-spin"></i>
+        </div>
+        <div class="avatar-edit">
+          <i class="fa-solid fa-camera"></i>
+        </div>
+        <input #photoInput type="file" accept="image/*" (change)="onPhotoSelected($event)" style="display:none" />
+      </div>
+
+      <h2 class="profile-name">{{ user.firstName }} {{ user.lastName }}</h2>
+      <span class="profile-pseudo">{{ user.pseudo }}</span>
+
+      <p *ngIf="user.description" class="profile-description">{{ user.description }}</p>
+
+      <div class="profile-meta" *ngIf="user.ville">
+        <i class="fa-solid fa-location-dot"></i>
+        <span>{{ user.ville }}</span>
+      </div>
+
+      <div class="profile-stats">
+        <div class="stat">
+          <span class="stat-value">{{ catches.length }}</span>
+          <span class="stat-label">Prises</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Prises de l'utilisateur -->
+    <h3 class="section-title">Mes prises</h3>
+
+    <div class="catches-grid" *ngIf="catches.length > 0">
+      <div *ngFor="let catch_ of catches" class="catch-card">
+        <div class="catch-image">
+          <img *ngIf="catch_.photoUrl" [src]="catch_.photoUrl" [alt]="catch_.fishName" />
+          <div *ngIf="!catch_.photoUrl" class="catch-no-photo">
+            <i class="fa-solid fa-fish"></i>
+          </div>
+          <div class="catch-badge">{{ catch_.fishName }}</div>
+        </div>
+        <div class="catch-info">
+          <span>⚖️ {{ catch_.fishWeight }} kg</span>
+          <span>📏 {{ catch_.size }} cm</span>
+          <span>📅 {{ catch_.catchDate | date:'dd/MM/yyyy' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="catches.length === 0" class="empty-state">
+      <i class="fa-solid fa-fish"></i>
+      <p>Aucune prise enregistrée</p>
+    </div>
+
+  </div>
+
+  <!-- Bottom nav -->
+  <div class="bottom-nav">
+    <button class="nav-btn" routerLink="/catches">
+      <i class="fas fa-house" style="font-size: 24px"></i>
+      <small>Accueil</small>
+    </button>
+    <a routerLink="/add-catch" class="fab">
+      <i class="fa-solid fa-plus"></i>
+    </a>
+    <button class="nav-btn active" routerLink="/profile">
+      <i class="fas fa-fish" style="font-size: 24px"></i>
+      <small>Profil</small>
+    </button>
+  </div>
+
 </div>
