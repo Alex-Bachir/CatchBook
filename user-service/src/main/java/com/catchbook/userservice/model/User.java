@@ -14,6 +14,9 @@ public class User {
     @Column(name = "user_id")
     private Long userId;
 
+    @Column(name = "google_id", unique = true, nullable = false)
+    private String googleId;
+
     @Column(name = "first_name")
     private String firstName;
 
@@ -21,10 +24,9 @@ public class User {
     private String lastName;
 
     private String pseudo;
-    private String email;
 
-    @Column(name = "password")
-    private String password;
+    @Column(unique = true, nullable = false)
+    private String email;
 
     @Column(name = "photo_profile")
     private String photoProfile;
@@ -34,4 +36,9 @@ public class User {
 
     @Column(name = "date_inscription")
     private LocalDateTime dateInscription;
+
+    @PrePersist
+    public void prePersist() {
+        this.dateInscription = LocalDateTime.now();
+    }
 }

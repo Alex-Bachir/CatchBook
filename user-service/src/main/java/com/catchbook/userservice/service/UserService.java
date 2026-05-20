@@ -4,6 +4,7 @@ import com.catchbook.userservice.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 // structure de base d'un service
 
@@ -43,5 +44,20 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+    public User findOrCreateOAuthUser(Map<String, String> profile) {
+        String googleId = profile.get("googleId");
+        String email = profile.get("email");
+        String name = profile.get("name");
+        String picture = profile.get("picture");
+
+        return userRepository.findByGoogleId(googleId).orElseGet(() -> {
+            User newUser = new User();
+            newUser.setGoogleId(googleId);
+            newUser.setEmail(email);
+            newUser.setFirstName(name);
+            newUser.setPhotoProfile(picture);
+            return userRepository.save(newUser);
+        });
+    }
 
 }

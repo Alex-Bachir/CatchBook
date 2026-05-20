@@ -25,5 +25,10 @@ spring:
               predicates:
                 - Path=/api/catches/**,/api/spots/**,/api/comments/**
 
+            - id: auth-service
+              uri: http://auth-service:8081
+              predicates:
+                - Path=/api/auth/**,/api/tokens/**,/oauth2/**,/login/oauth2/**
+
 jwt:
   secret: ${JWT_SECRET}

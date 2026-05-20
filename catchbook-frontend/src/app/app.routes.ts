@@ -19,15 +19,15 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
+    path: 'auth/callback',
+    loadComponent: () => import('./features/auth/login/auth-callback.component')
+      .then(m => m.AuthCallbackComponent)
+  },
+  {
     path: 'profile',
     loadComponent: () => import('./features/user/profile/profile.component')
       .then(m => m.ProfileComponent),
     canActivate: [authGuard]
-  },
-  {
-    path: 'register',
-    loadComponent: () => import('./features/auth/register/register.component')
-      .then(m => m.RegisterComponent)
   },
   {
     path: 'add-catch',

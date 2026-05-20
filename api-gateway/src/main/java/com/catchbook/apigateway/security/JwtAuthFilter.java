@@ -46,8 +46,10 @@ public class JwtAuthFilter implements Filter {
         }
 
         // Laisser passer les routes publiques
-        if (path.startsWith("/api/auth/")) {
-            chain.doFilter(request, response);
+        if (    path.startsWith("/api/auth/")   ||
+                path.startsWith("/oauth2/")     ||
+                path.startsWith("/login/oauth2/")) {
+                chain.doFilter(request, response);
             return;
         }
 

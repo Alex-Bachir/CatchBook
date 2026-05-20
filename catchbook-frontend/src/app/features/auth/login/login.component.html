@@ -17,29 +17,16 @@
       </svg>
       <span class="logo-text">CatchBook</span>
     </div>
-    <p class="tagline">Voter carnet de pêche connecter</p>
+    <p class="tagline">Votre carnet de pêche connecté</p>
   </div>
 
   <div class="login-card">
     <h2>Bienvenue !</h2>
     <p class="subtitle">Connectez-vous pour voir vos prises</p>
 
-    <div class="input-group">
-      <label>Email</label>
-      <input type="email" [(ngModel)]="email" placeholder="votre@email.com" />
-    </div>
-
-    <div class="input-group">
-      <label>Mot de passe</label>
-      <input type="password" [(ngModel)]="password" placeholder="••••••••" />
-    </div>
-
-    <button class="btn-login" (click)="onLogin()">Se connecter</button>
-
-    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-
-    <div class="register-link">
-      Pas encore de compte ? <a routerLink="/register">S'inscrire</a>
-    </div>
+    <a href="http://localhost:8080/oauth2/authorization/google" class="btn-google">
+      <i class="fab fa-google"></i>
+      Se connecter avec Google
+    </a>
   </div>
 </div>

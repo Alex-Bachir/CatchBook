@@ -5,6 +5,7 @@ import com.catchbook.userservice.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -49,6 +50,12 @@ public class UserController {
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
+    }
+
+    // Appelé par auth-service après Google OAuth2
+    @PostMapping("/oauth2")
+    public User findOrCreateOAuthUser(@RequestBody Map<String, String> profile) {
+        return userService.findOrCreateOAuthUser(profile);
     }
 }
 
