@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { CatchService } from '../../../core/services/catch.service';
 import { UserService } from '../../../core/services/user.service';
+import { AuthService } from '../../../core/services/auth.service';
 import { Catch } from '../../../core/models/catch.model';
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -22,14 +23,15 @@ export class CatchListComponent implements OnInit {
 
   constructor(
     private catchService: CatchService,
-    private userService: UserService
+    private userService: UserService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
-    const email = localStorage.getItem('email');
-    if (email) {
-      this.userService.getUserByEmail(email).subscribe({
-        next: (user) => this.pseudo = user.pseudo,
+    const decoded = this.authService.getDecodedToken();
+    if (decoded) {
+      this.userService.getUserById(decoded.userId).subscribe({
+        next: (user) => this.pseudo = user.pseudo ?? user.firstName,
         error: (err) => console.error('Erreur chargement profil', err)
       });
     }
@@ -54,10 +56,10 @@ export class CatchListComponent implements OnInit {
       const newMap: { [userId: number]: string } = {};
       users.forEach((user, index) => {
         if (user) {
-          newMap[uniqueUserIds[index]] = user.pseudo;
+          newMap[uniqueUserIds[index]] = user.pseudo ?? user.firstName;
         }
       });
-      this.userMap = newMap; // réassignation = Angular détecte le changement
+      this.userMap = newMap;
     });
   }
 }

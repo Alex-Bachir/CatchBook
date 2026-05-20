@@ -45,4 +45,18 @@ export class AuthService {
   register(credentials: RegisterRequest): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, credentials);
   }
+
+  getDecodedToken(): { email: string, userId: number } | null {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return {
+        email: payload.sub,
+        userId: payload.userId
+      };
+    } catch {
+      return null;
+    }
+  }
 }

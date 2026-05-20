@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { UserService } from '../../../core/services/user.service';
 import { CatchService } from '../../../core/services/catch.service';
 import { CloudinaryService } from '../../../core/services/cloudinary.service';
+import { AuthService } from '../../../core/services/auth.service';
 import { User } from '../../../core/models/user.model';
 import { Catch } from '../../../core/models/catch.model';
 
@@ -23,13 +24,14 @@ export class ProfileComponent implements OnInit {
   constructor(
     private userService: UserService,
     private catchService: CatchService,
-    private cloudinaryService: CloudinaryService
+    private cloudinaryService: CloudinaryService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
-    const email = localStorage.getItem('email');
-    if (email) {
-      this.userService.getUserByEmail(email).subscribe({
+    const decoded = this.authService.getDecodedToken();
+    if (decoded) {
+      this.userService.getUserById(decoded.userId).subscribe({
         next: (data) => {
           this.user = data;
           this.loadUserCatches(data.userId);
