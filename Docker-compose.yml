@@ -1,5 +1,17 @@
 services:
 
+  consul:
+    image: hashicorp/consul:1.17
+    container_name: catchbook-consul
+    ports:
+      - "8500:8500"
+    command: agent -server -bootstrap -ui -client=0.0.0.0
+    healthcheck:
+      test: ["CMD", "consul", "members"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   mysql:
     image: mysql:8.0
     container_name: catchbook-mysql
@@ -24,11 +36,14 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
+      consul:
+        condition: service_healthy
     restart: on-failure
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catchbook_user?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
+      JAVA_TOOL_OPTIONS: "-Dspring.cloud.compatibility-verifier.enabled=false"
 
   auth-service:
     build: ./auth-service
@@ -38,6 +53,8 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
+      consul:
+        condition: service_healthy
     restart: on-failure
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catchbook_auth?createDatabaseIfNotExist=true
@@ -46,6 +63,7 @@ services:
       JWT_SECRET: catchbook-super-secret-key-2024-secure
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
       GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      JAVA_TOOL_OPTIONS: "-Dspring.cloud.compatibility-verifier.enabled=false"
 
   catch-service:
     build: ./catch-service
@@ -55,11 +73,14 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
+      consul:
+        condition: service_healthy
     restart: on-failure
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catchbook_catch?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
+      JAVA_TOOL_OPTIONS: "-Dspring.cloud.compatibility-verifier.enabled=false"
 
   api-gateway:
     build: ./api-gateway
@@ -67,9 +88,14 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - user-service
-      - auth-service
-      - catch-service
+      consul:
+        condition: service_healthy
+      user-service:
+        condition: service_started
+      auth-service:
+        condition: service_started
+      catch-service:
+        condition: service_started
     restart: on-failure
     environment:
       JWT_SECRET: catchbook-super-secret-key-2024-secure
